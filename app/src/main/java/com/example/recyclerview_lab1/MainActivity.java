@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import com.example.recyclerview_lab1.databinding.ActivityMainBinding;
 
 import com.example.recyclerview_lab1.vistas.AcercaDe;
 import com.example.recyclerview_lab1.vistas.ListTrabajadores;
@@ -13,28 +14,24 @@ import com.example.recyclerview_lab1.vistas.SelectTipoTrabajador;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnAcerca;
-    private Button btnMostrar;
-    private Button btnAgregarTrabajador;
+    private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        btnAcerca = findViewById(R.id.btnAcerca);
-        btnAgregarTrabajador = findViewById(R.id.btnAgregarTrabajador);
-        btnMostrar = findViewById(R.id.btnMostrar);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        btnAgregarTrabajador.setOnClickListener(v -> {
+        binding.btnAgregarTrabajador.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, SelectTipoTrabajador.class));
         });
 
-        btnMostrar.setOnClickListener(v -> {
+        binding.btnMostrar.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, ListTrabajadores.class));
-            //ok
-
         });
-        btnAcerca.setOnClickListener(new View.OnClickListener(){
 
+        binding.btnAcerca.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AcercaDe.class);
@@ -42,5 +39,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }

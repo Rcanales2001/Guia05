@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import com.example.recyclerview_lab1.R;
+import com.example.recyclerview_lab1.databinding.ActivityListTrabajadoresBinding;
 import com.example.recyclerview_lab1.modelo.Trabajador;
 import com.example.recyclerview_lab1.repositorios.TrabajadorRespositos;
 import com.example.recyclerview_lab1.servicios.ServiceLocator;
@@ -17,16 +17,17 @@ import com.example.recyclerview_lab1.vistas.adaptador.TrabajadorAdaptador;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListTrabajadores extends AppCompatActivity implements  TrabajadorAdaptador.OnItemLongClickListener {
+public class ListTrabajadores extends AppCompatActivity implements TrabajadorAdaptador.OnItemLongClickListener {
 
+    private ActivityListTrabajadoresBinding binding;
     private TrabajadorAdaptador personaAdapter;
-
-    private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_trabajadores);
+        binding = ActivityListTrabajadoresBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         TrabajadorRespositos dbSource = ServiceLocator.getInstance().getDBSource();
         List<Trabajador> listaTrabajadores = dbSource.getAllListTrabajadores();
@@ -34,21 +35,17 @@ public class ListTrabajadores extends AppCompatActivity implements  TrabajadorAd
         // Configurando adaptador
         personaAdapter = new TrabajadorAdaptador((ArrayList<Trabajador>) listaTrabajadores);
         layoutManager = new LinearLayoutManager(this);
-        recyclerView = findViewById(R.id.rcvTrabajadores);
-        recyclerView.setAdapter(personaAdapter);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+
+        binding.rcvTrabajadores.setAdapter(personaAdapter);
+        binding.rcvTrabajadores.setLayoutManager(layoutManager);
+        binding.rcvTrabajadores.setHasFixedSize(true);
 
         personaAdapter.setOnItemLongClickListener(this);
     }
+
     private void editarTrabajador(int position) {
         Trabajador trabajador = personaAdapter.getTrabajador(position);
-
-        //Trabajador trabajador = personaAdapter.getTrabajador(position);
-
-        //Intent intent = new Intent(this, EditarTrabajadorActivity.class);
-        //intent.putExtra("trabajador", trabajador);
-        //startActivityForResult(intent, EDITAR_TRABAJADOR_REQUEST);
+        // Aquí puedes agregar el código para editar un trabajador.
     }
 
     private void eliminarTrabajador(int position) {
